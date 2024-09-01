@@ -16,5 +16,5 @@ jobs:
         node-version: '12'  # Ensure this matches the version used in action.yml
 
     - name: Install dependencies
-      run: npm install
+      run: npm install @actions/core @actions/github axios
       working-directory: ../../ # Adjust this if your action is in a subdirectory
