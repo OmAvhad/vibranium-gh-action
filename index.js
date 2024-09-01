@@ -1,5 +1,5 @@
-import { getInput, setOutput, setFailed } from '@actions/core';
 import { post } from 'axios';
+import { getInput, setOutput, setFailed } from '@actions/core';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
