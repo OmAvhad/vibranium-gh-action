@@ -32,7 +32,7 @@ runs:
 
         # Check if the file exists
         if not os.path.isfile(file_path):
-            raise FileNotFoundError(f"The file {file_path} does not exist.")
+            raise FileNotFoundError(f'The file {file_path} does not exist')
 
         # Read the file and send it to the API
         with open(file_path, 'rb') as file:
