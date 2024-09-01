@@ -13,7 +13,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '12'  # Ensure this matches the version used in action.yml
+        node-version: '18'  # Ensure this matches the version used in action.yml
 
     - name: Install dependencies
       run: npm install @actions/core @actions/github axios
