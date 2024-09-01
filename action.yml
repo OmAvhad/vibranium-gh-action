@@ -1,4 +1,4 @@
-name: 'API Call Action'
+name: 'Vibranium Action'
 description: 'An action to read a JSON file and make an API call'
 inputs:
   file-path:
