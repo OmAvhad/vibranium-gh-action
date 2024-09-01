@@ -6,9 +6,10 @@ inputs:
     description: 'The name of the file of OpenAPI spec (located in the root of the repository).'    
     required: true    
     default: 'openapi.json'
-runs:  
-  using: "python"  
-  main: "api_spec.py"
+runs:
+  using: "docker"
+  image: "python:3.9"  # Specify the Python version you need
+  entrypoint: ["python", "/action/api_spec.py"]
 branding:
   icon: shield
   color: blue
