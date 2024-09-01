@@ -1,5 +1,8 @@
 name: "Vibranium Action"
 description: "An action to read a JSON file and make an API call"
+branding:
+  color: "blue"
+  icon: "shield"
 inputs:
   file-path:
     description: "Path to the JSON file in the repository"
@@ -8,8 +11,40 @@ inputs:
     description: "The API endpoint to call"
     required: true
 runs:
-  using: "node12"
-  main: "index.js"
-branding:
-  color: "blue"
-  icon: "shield"
+  using: "composite"
+  steps:
+    - name: Setup Python Environment
+      run: |
+        python -m venv .venv
+        source .venv/bin/activate
+        pip install requests
+    - name: Run Python Script
+      run: |
+        python -c "
+        import os
+        import requests
+
+        # Get environment variables
+        file_path = os.getenv('INPUT_FILE_PATH')
+        api_url = os.getenv('INPUT_API_URL')
+        api_key = os.getenv('API_KEY')
+
+        # Check if the file exists
+        if not os.path.isfile(file_path):
+            raise FileNotFoundError(f"The file {file_path} does not exist.")
+
+        # Read the file and send it to the API
+        with open(file_path, 'rb') as file:
+            files = {'file': file}
+            headers = {'Authorization': f'Bearer {api_key}'}
+            response = requests.post(api_url, headers=headers, files=files)
+
+        # Check the response
+        if response.status_code == 200:
+            print('File sent successfully!')
+        else:
+            print(f'Failed to send file. Status code: {response.status_code}')
+            print(f'Response: {response.text}')"
+      env:
+        INPUT_FILE_PATH: ${{ inputs.file-path }}
+        INPUT_API_URL: ${{ inputs.api-url }}
