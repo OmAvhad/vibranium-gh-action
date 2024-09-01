@@ -1,0 +1,17 @@
+name: Vibranium API specification transfer
+description: A Github Action to transfer OpenAPI specification to Vibranium.
+author: Om Avhad
+
+inputs:  
+  file_name:    
+    description: 'The name of the file to send (located in the root of the repository).'    
+    required: true    
+    default: 'openapi.json'
+
+runs:  
+  using: "python"  
+  main: "api_spec.py"
+
+branding:
+  icon: shield
+  color: blue

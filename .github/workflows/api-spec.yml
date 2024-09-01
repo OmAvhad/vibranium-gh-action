@@ -1,0 +1,29 @@
+name: Vibranium API specification transfer
+
+on:
+  push:
+    branches:
+      - main  # or any other branch you want to trigger this action
+
+jobs:
+  send_file_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Send file to API
+        run: python api_spec.py
+        env:
+          FILE_PATH: ${{ inputs.file_path }}
+          API_URL: ${{ secrets.API_URL }}
+          API_KEY: ${{ secrets.API_KEY }}
