@@ -11,7 +11,7 @@ inputs:
 runs:
   using: "docker"
   image: "python:3.9"  # Specify the Python version you need
-  entrypoint: ["python", "/action/api_spec.py"]
+  entrypoint: "python /action/api_spec.py"
 
 branding:
   icon: "shield"
