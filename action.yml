@@ -1,15 +1,15 @@
-name: 'Vibranium Action'
-description: 'An action to read a JSON file and make an API call'
+name: "Vibranium Action"
+description: "An action to read a JSON file and make an API call"
 inputs:
   file-path:
-    description: 'Path to the JSON file in the repository'
+    description: "Path to the JSON file in the repository"
     required: true
   api-url:
-    description: 'The API endpoint to call'
+    description: "The API endpoint to call"
     required: true
 runs:
-  using: 'node12'
-  main: 'index.js'
+  using: "node12"
+  main: "index.js"
 branding:
-  color: 'blue'
-  icon: 'shield
+  color: "blue"
+  icon: "shield
