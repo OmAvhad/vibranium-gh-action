@@ -1,5 +1,5 @@
 # Node.js dependencies
-node_modules/
+# node_modules/
 
 # Log files
 *.log
@@ -15,5 +15,3 @@ build/
 *.tmp
 *.swp
 
-# Ignore the `action` directory node_modules if present
-action/node_modules/
