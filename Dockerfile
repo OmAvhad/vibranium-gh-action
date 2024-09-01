@@ -9,3 +9,5 @@ COPY api_spec.py /action/
 
 # Install any Python dependencies
 RUN pip install requests
+
+ENTRYPOINT ["python", "/action/api_spec.py"]
