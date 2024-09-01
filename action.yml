@@ -12,4 +12,4 @@ runs:
   main: "index.js"
 branding:
   color: "blue"
-  icon: "shield
+  icon: "shield"
