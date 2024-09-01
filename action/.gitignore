@@ -1,0 +1,19 @@
+# Node.js dependencies
+node_modules/
+
+# Log files
+*.log
+
+# Environment files
+.env
+
+# Build output
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.swp
+
+# Ignore the `action` directory node_modules if present
+action/node_modules/
