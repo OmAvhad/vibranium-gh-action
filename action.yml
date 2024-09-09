@@ -58,6 +58,22 @@ runs:
                     print(f'Response: {response.text}')
             elif lint_response.status_code == 400:
                 print('Linting failed')
+                # Create markdown report
+                markdown_report = '# Linting Failure Report\n\n'
+                markdown_report += '| Path | Type | Line | Message |\n'
+                markdown_report += '|------|------|------|---------|\n'
+
+                for error in lint_errors:
+                    path = ' -> '.join(error.get('path', []))  # Join path elements with ' -> '
+                    type_ = error.get('code', 'N/A')
+                    line = error['range']['start']['line']
+                    message = error.get('message', 'No message provided')
+                    
+                    markdown_report += f'| {path} | {type_} | {line} | {message} |\n'
+
+                # Save the markdown report to a file
+                with open('lint_report.md', 'w') as report_file:
+                    report_file.write(markdown_report)
                 sys.exit(1) # Exit with error code 1 to indicate failure"
       shell: bash
       env:
