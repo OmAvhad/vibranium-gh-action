@@ -58,6 +58,11 @@ runs:
                     print(f'Response: {response.text}')
             elif lint_response.status_code == 400:
                 print('Linting failed')
+                for issue in lint_response.json():
+                    file_path = file_path  # Replace with correct file reference if available
+                    line_number = error['range']['start']['line']
+                    message = error['message']
+                    print(f'::error file={file_path},line={line_number}::{message}')
                 sys.exit(1) # Exit with error code 1 to indicate failure"
       shell: bash
       env:
