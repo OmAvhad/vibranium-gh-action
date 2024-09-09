@@ -29,7 +29,6 @@ runs:
 
         # Get environment variables
         file_path = os.getenv('INPUT_FILE_PATH')
-        api_url = os.getenv('INPUT_API_URL')
         api_key = os.getenv('API_KEY')
 
         # Check if the file exists
@@ -42,15 +41,15 @@ runs:
         
             # Linter
             spec_data = {
-                "spec" : data
+                'spec' : data
             }
 
-            lint_response = requests.post("https://vibranium-api-guard.onrender.com/api/lint/linter", json=spec_data)
+            lint_response = requests.post('https://vibranium-api-guard.onrender.com/api/lint/linter', json=spec_data)
 
             if lint_response.status_code == 200:
-                print("Linting successful")
-                print("Ingesting APIs")
-                response = requests.post("https://vibranium-api-guard.onrender.com/api/endpoints/ingest", json=data)
+                print('Linting successful')
+                print('Ingesting APIs')
+                response = requests.post('https://vibranium-api-guard.onrender.com/api/endpoints/ingest', json=data)
                 # Check the response
                 if response.status_code == 200:
                     print('Collection updated successfully')
@@ -58,7 +57,7 @@ runs:
                     print(f'Failed to send file. Status code: {response.status_code}')
                     print(f'Response: {response.text}')
             elif lint_response.status_code == 400:
-                print("Linting failed")
+                print('Linting failed')
                 sys.exit(1) # Exit with error code 1 to indicate failure"
       shell: bash
       env:
