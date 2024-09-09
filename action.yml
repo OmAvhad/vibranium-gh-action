@@ -45,14 +45,12 @@ runs:
                 "spec" : data
             }
 
-            lint_response = requests.post("https://vibranium-api-guard.onrender.com/api/lint/linter",
-                            json=spec_data)
+            lint_response = requests.post("https://vibranium-api-guard.onrender.com/api/lint/linter", json=spec_data)
 
             if lint_response.status_code == 200:
                 print("Linting successful")
                 print("Ingesting APIs")
-                response = requests.post("https://vibranium-api-guard.onrender.com/api/endpoints/ingest",
-                          json=data)
+                response = requests.post("https://vibranium-api-guard.onrender.com/api/endpoints/ingest", json=data)
                 # Check the response
                 if response.status_code == 200:
                     print('Collection updated successfully')
