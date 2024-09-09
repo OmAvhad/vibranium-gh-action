@@ -18,6 +18,7 @@ runs:
         python -m venv .venv
         source .venv/bin/activate
         pip install requests
+        pip install tabulate
       shell: bash
     - name: Run Python Script
       run: |
@@ -25,6 +26,7 @@ runs:
         import os
         import requests
         import json
+        from tabulate import tabulate
 
         # Get environment variables
         file_path = os.getenv('INPUT_FILE_PATH')
@@ -38,12 +40,46 @@ runs:
         # Read the file and send it to the API
         with open(file_path, 'rb') as file:
             data = json.load(file)
+        
+            # Linter
+            spec_data = {
+                "spec" : data
+            }
+
+            lint_response = requests.post('https://vibranium-api-guard.onrender.com/api/lint/linter',
+                            json=spec_data)
+
+            if lint_response.status_code == 200:
+                print('Linting successful')
+            elif lint_response.status_code == 400:
+                print('Linting failed')
+                # Log the response
+                table_data = []
+                for issue in lint_response.json():
+                    path = " > ".join(issue["path"])
+                    # Trim the path if it's too long
+                    if len(path) > 20:
+                        path = "..." + path[-(20 - 3):]
+                    message = issue["message"]
+                    line = issue["range"]["start"]["line"]
+                    issue_type = issue["code"]
+                    severity = issue["severity"]
+                    table_data.append([path, severity, line, message])
+                    
+                # Print the table
+                headers = ["Path", "Severity", "Line", "Message"]
+                print(tabulate(table_data, headers, tablefmt="grid"))
+                sys.exit(1) # Exit with error code 1 to indicate failure
+            
+            print("Ingesting APIs")
             headers = {'Authorization': f'Bearer {api_key}'}
-            response = requests.post(api_url, headers=headers, json=data)
+            response = requests.post("https://vibranium-api-guard.onrender.com/api/endpoints/ingest", 
+                      headers=headers, 
+                      json=data)
 
         # Check the response
         if response.status_code == 200:
-            print('File sent successfully!')
+            print('Collection updated successfully')
         else:
             print(f'Failed to send file. Status code: {response.status_code}')
             print(f'Response: {response.text}')"
